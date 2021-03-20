@@ -10,7 +10,7 @@ class Order(models.Model):
     register_date = models.DateTimeField(auto_now_add=True,verbose_name="등록날짜")
 
     def __str__(self):
-        return self.name
+        return str(self.fcuser) + ' ' + str(self.product)
 
     class Meta:
         db_table = "order"
