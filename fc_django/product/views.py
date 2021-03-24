@@ -6,6 +6,33 @@ from .forms import ResisterProductForm
 from order.forms import RegisterForm as OrderForm
 from django.utils.decorators import method_decorator
 from fcuser.decorators import admin_required
+from rest_framework import generics , mixins
+from .serializers import ProductSerializer
+
+class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    
+    serializer_class = ProductSerializer
+
+    #어떤 데이터를 가져올지
+    def get_queryset(self):
+        return Product.objects.all().order_by('id')
+    
+    # mixin 리스트 모델로 가져올 수 있다
+    def get(self,request,*args,**kwargs):
+        return self.list(request, *args, **kwargs)
+        
+#mixins.RetrieveModelMixin 상세보기를 위한 mixin
+class ProductDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    
+    serializer_class = ProductSerializer
+
+    #어떤 데이터를 가져올지
+    def get_queryset(self):
+        return Product.objects.all().order_by('id')
+    
+    # mixin 리스트 모델로 가져올 수 있다
+    def get(self,request,*args,**kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
 class ProductList(ListView):
     model = Product

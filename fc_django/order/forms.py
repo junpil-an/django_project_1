@@ -28,7 +28,7 @@ class RegisterForm(forms.Form):
         fcuser = self.request.session.get('user')
 
 
-        if not(quantity and product):
+        if not(quantity and product ):
             
             self.add_error("product", "값이 없습니다")
             self.add_error("fcuser", "값이 없습니다")
