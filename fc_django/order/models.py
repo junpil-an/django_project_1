@@ -8,6 +8,17 @@ class Order(models.Model):
     product = models.ForeignKey('product.Product', on_delete=models.CASCADE,verbose_name="상품")
     quantity = models.IntegerField(verbose_name="수량")
     register_date = models.DateTimeField(auto_now_add=True,verbose_name="등록날짜")
+    #기본값은 대기중으로
+    #choices=() 값을 직접 만드는 것이 아니라 선택할 수 있도록 만듦
+    status = models.CharField(choices=(
+        ('대기중','대기중1'),
+        ('결제대기','결제대기1'),
+        ('결제완료','결제완료'),
+        ('환불','환불'),
+
+        ) ,default = "대기중", max_length = 32 ,verbose_name= '상태')
+    memo = models.TextField(null= True , blank= True , verbose_name ='메모')
+
 
     def __str__(self):
         return str(self.fcuser) + ' ' + str(self.product)

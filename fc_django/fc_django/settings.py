@@ -29,9 +29,24 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+BATON = {
+    'SITE_HEADER' : "Pill's Admin",
+    'SITE_TITLE' : 'USERS ADMIN',
+    'INDEX_TITLE': 'INDEX',
+    'SUPPORT_HREF' : 'http://naver.com',
+    'COPYRIGHT' : 'hhjg6272@naver.com',
+    'POWERED_BY' :'<a href:"https://naver.com">naver</a>',
+    'MENU_TITLE': "0627",
+    
+
+}
+
 
 INSTALLED_APPS = [
+    #가장 위에다 추가
+    'baton',
     'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -42,6 +57,9 @@ INSTALLED_APPS = [
     'fcuser',
     'order',
     'product',
+    
+    #앱을 찾아서 등록해 줌
+    'baton.autodiscover',
 ]
 
 MIDDLEWARE = [
