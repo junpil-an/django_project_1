@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -37,8 +38,39 @@ BATON = {
     'COPYRIGHT' : 'hhjg6272@naver.com',
     'POWERED_BY' :'<a href:"https://naver.com">naver</a>',
     'MENU_TITLE': "0627",
-    
-
+    'MENU': (
+        { 'type': 'title', 'label': 'main' },
+        {
+            'type': 'app',
+            'name': 'fcuser',
+            'label': '사용자',
+            'icon': 'fa fa-lock',
+            'models': (
+                {
+                    'name': 'fcuser',
+                    'label': '사용자'
+                },
+            )
+        },
+        {
+            'type': 'free', 'label': '주문', 'default_open': True, 'children': [
+                { 'type': 'free', 'label': '주문', 'url': '/admin/order/order/' },
+                { 'type': 'free', 'label': '주문 날짜 뷰', 'url': '/admin/order/order/date_view/' },
+            ]
+        },
+        {
+            'type': 'app',
+            'name': 'product',
+            'label': '상품',
+            'models': (
+                {
+                    'name': 'product',
+                    'label': '상품'
+                },
+            )
+        },
+        { 'type': 'free', 'label': '매뉴얼', 'url': '/admin/manual' },
+    ),    
 }
 
 
@@ -54,9 +86,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
-    'fcuser',
-    'order',
-    'product',
+    'fcuser.apps.FcuserConfig',
+    'order.apps.OrderConfig',
+    'product.apps.ProductConfig',
     
     #앱을 찾아서 등록해 줌
     'baton.autodiscover',
@@ -77,7 +109,11 @@ ROOT_URLCONF = 'fc_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates')
+        ],
+        #각 app 안에 있는 template를 찾아봄
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,7 +135,7 @@ WSGI_APPLICATION = 'fc_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR/ 'db.sqlite3',
     }
 }
 
@@ -126,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'UTC'
 

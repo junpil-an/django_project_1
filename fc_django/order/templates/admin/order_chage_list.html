@@ -1,0 +1,22 @@
+{% extends 'admin/change_list.html' %}
+{% load static %}
+
+{% block extrahead %}
+<!-- 기본 앞에있는 extrahead를 호출안하기 때문에 꼭 해줘야 함 -->
+{{block.super}}
+
+<script>
+    function order_refund_submit(obj_id){
+        // 클릭된 버튼에 아이디가 폼안에 히든값으로 추가됨
+        jQuery('#changelist-form').append('<input type="hidden" name="obj_id" value="'+ obj_id +  '"> ');
+        jQuery('#changelist-form').submit() 
+    }
+</script>
+
+{% endblock %}
+
+{% block search %}
+
+<a class ='btn btn-primary mb-3' href="/admin/order/order/date_view/">날짜뷰 보기</a>
+{{ block.super }}
+{% endblock %}
